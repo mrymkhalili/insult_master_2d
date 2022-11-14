@@ -30,7 +30,7 @@ public class GameplayManager : MonoBehaviour {
 	private AudioClip user_win_audio;
 	private AudioClip cmp_win_audio;
 
-// %%%%%%%%%%%% INITIALIZING %%%%%%%%%%%%
+// %%%%%%%%%%%% INITIALIZING/START %%%%%%%%%%%%
 
 	void Start () {
 		// grab the gameObjects from the scene
@@ -61,7 +61,8 @@ public class GameplayManager : MonoBehaviour {
 		if (first_round == 1) {
 			Debug.Log ("player goes first");
 			// give the user a range of insults to choose from
-			Fill_Insults();
+			// Fill_Insults();
+			Fill_UI(0);
 		} else {
 			Debug.Log ("computer goes first");
 			// computer randomly chooses an insult
@@ -69,7 +70,7 @@ public class GameplayManager : MonoBehaviour {
 		}
 	}
 
-// %%%%%%%%%%%% DETERMINING WINNER OF THE ROUND & PLAY AUDIO %%%%%%%%%%%%
+// %%%%%%%%%%%% MISCELLANEOUS %%%%%%%%%%%%
 
 	// when user selects an answer (to program's insult)
 	private void AnswerSelected(int index) {
@@ -91,7 +92,7 @@ public class GameplayManager : MonoBehaviour {
 
 		current = Random.Range(0, insults.Length);
 		cmp_text.text = insults[current].insult_txt;
-		FillAnswers();
+		Fill_UI(1); // insutls 0, answers 1
 	}
 
 
@@ -110,7 +111,7 @@ public class GameplayManager : MonoBehaviour {
 		}
 	}
 
-// %%%%%%%%%%%% GAME STATE %%%%%%%%%%%%
+// %%%%%%%%%%%% WINNING CONDITIONS %%%%%%%%%%%%
 
 	// computer scores a point every round it wins. if it wins three rounds the user loses.
 	private void ComputerWinsRound(){
@@ -126,10 +127,10 @@ public class GameplayManager : MonoBehaviour {
 			SceneManager.LoadScene ("EndGameScene");
 			return;
 		}
-		// StartCoroutine (SetRandomInsult());
+		StartCoroutine (SetRandomInsult());
 		current = Random.Range (0, insults.Length);
 		cmp_text.text = insults[current].insult_txt;
-		FillAnswers();
+		Fill_UI(1);
 	}
 
 	// user scores a point every round it wins. if it wins three rounds it wins.
@@ -149,13 +150,13 @@ public class GameplayManager : MonoBehaviour {
 			return;
 		}
 		cmp_text.text = "...";
-		Fill_Insults();
+		// 0 for insults, 1 for answers
+		Fill_UI(0);
+
 	}
 
-// %%%%%%%%%%%% FillUi() %%%%%%%%%%%%
-
-	private void FillAnswers() {
-
+// %%%%%%%%%%%% Fill_Ui() %%%%%%%%%%%%
+	private void Fill_UI(int choice) {
 		// wipe previous options/answers
 		foreach (Transform child in answers_parent.transform) {
 			Destroy (child.gameObject);
@@ -163,58 +164,32 @@ public class GameplayManager : MonoBehaviour {
 
 		float height = answers_parent.GetComponent<RectTransform>().rect.yMax - 20;
 
-		for (int i = 0; i < answers.Length; i++) {
+		for (int i = 0; i < 4; i++) {
 			// ResponseButton is a prefab - we can instantiate new objects
 			GameObject answerButton =(GameObject) Instantiate (Resources.Load("ResponseButton"), new Vector3(0,height), new Quaternion(0,0,0,0));
 
 			// attach the prefab to the answers container/parent
 			answerButton.transform.SetParent(answers_parent.transform, false);
 
-			// fill in the answer button
-			FillAnswerButton (answerButton, i);
-
+			FillButton(answerButton, i, choice);
 			height += answerButton.GetComponent<RectTransform> ().rect.y - 20;
 		}
 	}
 
-	private void Fill_Insults() {
-		//first we destroy the previous options
-		foreach (Transform child in answers_parent.transform) {
-			Destroy (child.gameObject);
+	private void FillButton(GameObject answerButton, int index, int choice){
+		Text textUi = answerButton.GetComponentInChildren<Text> ();
+		if (choice == 0) {
+			textUi.text = insults[index].insult_txt;
+		} else {
+			textUi.text = answers[index];
 		}
 
-		float height = answers_parent.GetComponent<RectTransform>().rect.yMax - 20;
-
-		for(int i = 0; i < insults.Length; i++) {
-			// ResponseButton is a prefab - we can instantiate new objects
-			GameObject answerButton =(GameObject) Instantiate (Resources.Load("ResponseButton"), new Vector3(0,height), new Quaternion(0,0,0,0));
-
-			// attach the prefab to the insults container/parent
-			answerButton.transform.SetParent(answers_parent.transform, false);
-
-			// fill in the insult button
-			Fill_Insult_Button(answerButton, i);
-
-			height += answerButton.GetComponent<RectTransform> ().rect.y - 20;
-		}
-	}
-
-	private void FillAnswerButton(GameObject answerButton, int index){
-		Text textUi = answerButton.GetComponentInChildren<Text> ();
-		textUi.text = answers[index];
-
 		answerButton.GetComponent<Button> ().onClick.AddListener (() => {
-			AnswerSelected(index);
-			textUi.color = Color.green;
-		});
-	}
-
-	private void Fill_Insult_Button(GameObject answerButton, int index) {
-		Text textUi = answerButton.GetComponentInChildren<Text> ();
-		textUi.text = insults[index].insult_txt;
-
-		answerButton.GetComponent<Button> ().onClick.AddListener (() => {
-			InsultSelected(index);
+			if (choice == 0) {
+				InsultSelected(index);
+			} else {
+				AnswerSelected(index);
+			}
 			textUi.color = Color.green;
 		});
 	}
