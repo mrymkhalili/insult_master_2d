@@ -1,6 +1,6 @@
 # insult_master_2d
 
-game demo:
+game demo: https://youtu.be/MxZ12_gpjvw
 
 
 ### GameFiller.cs
