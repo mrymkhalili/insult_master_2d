@@ -32,11 +32,11 @@ Scripts:
 
 In GameFiller class two important methods are defined: 
 
-1) Answers:
+** 1) Answers: **
 Array of strings (contains only four elements for this game’s purposes) that holds comeback responses to the insults.
 
 
-2) Insults:
+** 2) Insults: **
 An array of Insult objects (also containing four elements). The Insult class objects are serialized from GameplayManager and each object has two properties insult_txt and correct_answer. Each insult has one single correct comeback (response) based on which the computer or user can score and win a round.
 
 
@@ -44,7 +44,8 @@ An array of Insult objects (also containing four elements). The Insult class obj
 
 GameplayManager has many parts, I’m going to go through each briefly: 
 
-<ins> Defining game variables: </ins> 
+<ins> ** Defining game variables: **  </ins> 
+<br>
 Here we define an Insult class and initialize arrays of type string (to be populated with Answers) and array of objects of type Insult (to be populated with insults and their correct answer). We then define a ‘current’ variable that points to the current insult/comeback in each iteration (choice made by user or program). We also have to define variables to keep score for user and computer and then load audios that we will play at the end of each round based on who scored. Finally, we initialize some UI objects that we will update throughout the game.
 
 <ins> Start() / Initializing: </ins>
