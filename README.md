@@ -2,7 +2,7 @@
 
 ### game demo:
 
-[![insult master]](https://www.youtube.com/watch?v=MxZ12_gpjvw)
+[insult master demo](https://www.youtube.com/watch?v=MxZ12_gpjvw)
 
 ### GameFiller.cs
 placeholder
