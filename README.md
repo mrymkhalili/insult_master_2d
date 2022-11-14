@@ -13,13 +13,13 @@ At the beginning of the duel, it is randomly chosen whose turn is to play. In ou
 In the original game, the player learns the insults and their responses as he fights other pirates. In our case, the player already has all the questions and answers learned and they will be presented to him every time he/she is ready to insult. Here you can find the insults from the original game (you can ignore the Sword Master's insults). 
 “””
 
-Scenes:
+**Scenes:**
 1. MenuScene
 2. MainGameScene
 3. EndGameScene
 
 
-Scripts:
+**Scripts:**
 1. GameFiller.cs:
 2. GameplayManager.cs:
 3. DialogManager.cs
@@ -55,14 +55,14 @@ First thing we do is load Answers and Insults with string[] and Insult[] data ty
 If the user gets to go first, Fill_UI() will be called to populate the answers section with several insults options for the user to select from. The computer then randomly picks a comeback from answers. If the computer’s answer matches the correct answer for the current insult, the user loses and the ‘boo’ audio plays. Otherwise the user wins and the ‘applause’ audio plays. The player who wins gets to pick the insult in the next round of the game.
 
 If the computer gets to go first, a random insult will be displayed (to which the user has to respond). And the game continues until either player scores three strikes.
+<br>
 
-
-<ins> Winning conditions: </ins>
+<ins> **Winning conditions:** </ins>
 <br>
 In this part of the program we are ready to update scores and refill UI components after each round and finally define winning conditions.
+<br>
 
-
-<ins> Fill_UI: </ins>
+<ins> **Fill_UI:** </ins>
 <br>
 Depending on who’s turn it is, we fill the UI component answers_parent with Answers or Insults data and make them clickable.
 
