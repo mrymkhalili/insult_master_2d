@@ -13,6 +13,17 @@ At the beginning of the duel, it is randomly chosen whose turn is to play. In ou
 In the original game, the player learns the insults and their responses as he fights other pirates. In our case, the player already has all the questions and answers learned and they will be presented to him every time he/she is ready to insult. Here you can find the insults from the original game (you can ignore the Sword Master's insults). 
 “””
 
+### Gameplay:
+It is randomly decided by the program which player goes first:
+
+1. Computer goes first: Computer will select and display a random insult. The user will be presented with four answers and they can select one of these as a comback to the computer's insult. If user's answer matches the current insult's correct answer, user wins round. Else computer wins. In either case the score will be reflected on the screen for both pleayers.
+
+2. User goes first: User selects an insult to which the computer responds with a randomly chosen answer. If computer's answer matches the current insult's correct answer, computer wins round. Else user wins. In either case the score will be reflected on the screen for both pleayers.
+
+For the next rounds, the player who won the previous round gets to start (pick insults). If either players gets to three strikes they win the game. The user will then be prompted to an end screen which gives them the option to quit or restart.
+
+### Components:
+
 **Scenes:**
 1. MenuScene
 2. MainGameScene
